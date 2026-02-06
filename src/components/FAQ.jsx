@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const FAQ = () => {
     return (
-        <section className="py-20 lg:py-32 bg-white perspective-1000">
+        <section className="py-24 lg:py-32 bg-white">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
@@ -26,7 +26,7 @@ const FAQ = () => {
                         visible: {
                             opacity: 1,
                             transition: {
-                                staggerChildren: 0.15
+                                staggerChildren: 0.1
                             }
                         }
                     }}
@@ -43,73 +43,45 @@ const FAQ = () => {
 const FAQItem = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const variants = {
-        hidden: { opacity: 0, y: 20, rotateX: -10 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            rotateX: 0,
-            transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 15
-            }
-        }
-    };
-
     return (
         <motion.div
-            variants={variants}
+            variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 }
+            }}
             className={cn(
-                "group rounded-xl overflow-hidden transition-all duration-500 transform preserve-3d",
-                isOpen
-                    ? "bg-white shadow-xl ring-1 ring-black/5 scale-[1.02] z-10"
-                    : "bg-secondary-bg shadow-sm hover:shadow-md hover:scale-[1.01] hover:bg-gray-50 bg-opacity-80 backdrop-blur-sm"
+                "border-b border-gray-100 transition-all duration-300",
+                isOpen ? "pb-6" : "pb-0"
             )}
         >
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left relative z-10"
+                className="w-full py-6 flex items-start justify-between text-left group"
             >
                 <span className={cn(
-                    "text-lg md:text-xl font-bold transition-colors duration-300",
-                    isOpen ? "text-primary" : "text-text-primary group-hover:text-primary"
+                    "text-lg md:text-xl font-medium transition-colors duration-300 pr-8",
+                    isOpen ? "text-primary" : "text-text-primary group-hover:text-primary/80"
                 )}>
                     {question}
                 </span>
-                <motion.div
-                    animate={{
-                        rotate: isOpen ? 180 : 0,
-                        backgroundColor: isOpen ? "var(--color-primary-bg)" : "transparent"
-                    }}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    className={cn(
-                        "rounded-full p-2 transition-colors duration-300",
-                        isOpen ? "text-primary" : "text-text-muted group-hover:text-primary"
-                    )}
-                >
-                    <ChevronDown size={20} />
-                </motion.div>
+                <span className={cn(
+                    "flex-shrink-0 ml-4 rounded-full p-1 transition-all duration-300",
+                    isOpen ? "bg-primary text-white rotate-180" : "bg-secondary-bg text-text-primary group-hover:bg-primary/10"
+                )}>
+                    {isOpen ? <Minus size={20} /> : <Plus size={20} />}
+                </span>
             </button>
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0, rotateX: -15 }}
-                        animate={{ height: "auto", opacity: 1, rotateX: 0 }}
-                        exit={{ height: 0, opacity: 0, rotateX: -15 }}
-                        transition={{
-                            type: "spring",
-                            stiffness: 150,
-                            damping: 20,
-                            mass: 0.8
-                        }}
-                        style={{ transformOrigin: "top" }}
-                        className="overflow-hidden bg-white"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                        className="overflow-hidden"
                     >
-                        <div className="px-8 pb-8 pt-0 text-text-muted text-base leading-relaxed border-t border-dashed border-gray-100 mt-2">
-                            <div className="pt-4">
-                                {answer}
-                            </div>
+                        <div className="text-text-muted text-lg leading-relaxed max-w-2xl pl-4 border-l-2 border-primary/20">
+                            {answer}
                         </div>
                     </motion.div>
                 )}

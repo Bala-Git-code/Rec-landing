@@ -35,11 +35,17 @@ const LogoSlider = () => {
                 >
                     {/* Double the logos to create seamless loop - EXACTLY 2 sets for 50% translation */}
                     {[...logos, ...logos].map((logo, index) => (
-                        <div key={index} className="mx-8 flex items-center justify-center min-w-[200px]">
-                            {/* Placeholder for Logos - Text styled to look like logos */}
-                            <span className="text-2xl md:text-3xl font-bold text-gray-300 hover:text-gray-900 transition-colors duration-300 cursor-default select-none grayscale hover:grayscale-0 hover:scale-115 transform block">
-                                {logo}
-                            </span>
+                        <div key={index} className="mx-6 flex items-center justify-center min-w-[180px]">
+                            {/* Interactive "Logo Pill" */}
+                            <div className="group relative cursor-pointer perspective-1000">
+                                <div className="relative px-8 py-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-sm transition-all duration-300 group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 group-hover:bg-white group-hover:border-primary/20">
+                                    <span className="text-xl md:text-2xl font-bold text-gray-400 group-hover:text-primary transition-colors duration-300 select-none block transform group-hover:rotate-x-12">
+                                        {logo}
+                                    </span>
+                                    {/* Shine effect */}
+                                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/0 via-white/50 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

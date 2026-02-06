@@ -1,18 +1,30 @@
+// ... imports unchanged
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, CornerDownRight, Check, X } from 'lucide-react';
+import { ArrowRight, Check, X, GitCommit } from 'lucide-react';
 
 const FlowchartSection = () => {
     return (
-        <section className="py-20 lg:py-32 bg-white overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 lg:py-32 bg-white overflow-hidden relative">
+            {/* Background Grid Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-16 max-w-3xl mx-auto">
+                <div className="text-center mb-20 max-w-3xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider text-primary uppercase bg-primary/10 rounded-full"
+                    >
+                        System Architecture
+                    </motion.div>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-bold text-text-primary mb-4"
+                        className="text-3xl md:text-5xl font-bold text-text-primary mb-6"
                     >
                         AI Recruiting Software That Works Like Your Own HR Team
                     </motion.h2>
@@ -20,192 +32,225 @@ const FlowchartSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-text-muted"
+                        transition={{ delay: 0.1 }}
+                        className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto"
                     >
                         Build custom hiring workflows in minutes. No coding required.
                     </motion.p>
                 </div>
 
-                {/* Flowchart Cards Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <FlowchartCard
-                        title="Automated Candidate Screening"
-                        delay={0.1}
-                        flow={
-                            <>
-                                <Node label="New Application" bg="blue" />
-                                <Connector />
-                                <Node label="AI Resume Screening" bg="blue" helper="Ranks top 20%" />
-                                <Connector />
-                                <Node label="Score > 75%?" bg="light" type="decision" />
-                                <div className="grid grid-cols-2 gap-4 mt-2">
-                                    <div className="flex flex-col items-center">
-                                        <BranchLabel type="yes" />
-                                        <Connector small />
-                                        <Node label="Auto-schedule Interview" bg="blue" />
-                                    </div>
-                                    <div className="flex flex-col items-center">
-                                        <BranchLabel type="no" />
-                                        <Connector small />
-                                        <Node label="Send Rejection" bg="blue" />
-                                    </div>
-                                </div>
-                            </>
-                        }
-                        benefit="Screen 250+ applications in minutes vs. 8 hours manually"
-                    />
+                {/* Connected Flowchart Cards */}
+                <div className="relative">
+                    {/* Connecting Pipeline Line (Desktop) */}
+                    <div className="hidden lg:block absolute top-[40%] left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent -translate-y-1/2 z-0">
+                        {/* Animated Flow Packet */}
+                        <motion.div
+                            animate={{ x: ["0%", "100%"] }}
+                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                            className="w-20 h-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 blur-sm"
+                        />
+                    </div>
 
-                    <FlowchartCard
-                        title="Multi-Stage Interview"
-                        delay={0.3}
-                        flow={
-                            <>
-                                <Node label="Interview Invite Accepted" bg="blue" />
-                                <Connector />
-                                <Node label="AI Video Interview" bg="blue" helper="Technical Screening" />
-                                <Connector />
-                                <Node label="Score > 80%?" bg="light" type="decision" />
-                                <div className="grid grid-cols-2 gap-4 mt-2">
-                                    <div className="flex flex-col items-center">
-                                        <BranchLabel type="yes" />
-                                        <Connector small />
-                                        <Node label="Hiring Manager Round" bg="blue" />
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 relative z-10">
+                        <FlowchartCard
+                            title="Automated Candidate Screening"
+                            step="01"
+                            delay={0.1}
+                            flow={
+                                <>
+                                    <Node label="New Application" type="start" />
+                                    <Connector />
+                                    <Node label="AI Resume Screening" helper="Ranks top 20%" />
+                                    <Connector />
+                                    <Node label="Score > 75%?" type="decision" />
+                                    <div className="grid grid-cols-2 gap-2 mt-2 w-full">
+                                        <div className="flex flex-col items-center">
+                                            <BranchLine type="yes" />
+                                            <Node label="Auto-schedule" minimal />
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <BranchLine type="no" />
+                                            <Node label="Send Rejection" minimal type="end" />
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col items-center">
-                                        <BranchLabel type="no" />
-                                        <Connector small />
-                                        <Node label="Auto-feedback Email" bg="blue" />
-                                    </div>
-                                </div>
-                            </>
-                        }
-                        benefit="Reduce time-to-hire from 42 days to 12 days"
-                    />
+                                </>
+                            }
+                            benefit="Screen 250+ applications in minutes vs. 8 hours manually"
+                        />
 
-                    <FlowchartCard
-                        title="Candidate Re-engagement"
-                        delay={0.5}
-                        flow={
-                            <>
-                                <Node label="Candidate Rejected" bg="blue" helper="But scored 60-74%" />
-                                <Connector />
-                                <Node label="Add to Talent Pool" bg="blue" />
-                                <Connector />
-                                <Node label="New Position Open?" bg="light" type="decision" />
-                                <div className="grid grid-cols-2 gap-4 mt-2">
-                                    <div className="flex flex-col items-center">
-                                        <BranchLabel type="yes" />
-                                        <Connector small />
-                                        <Node label="AI Personal Email" bg="blue" />
+                        {/* Mobile Connector */}
+                        <div className="lg:hidden flex justify-center py-4 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDAgTTEwIDQwIiBzdHJva2U9IiNlN2U1ZTQiIHN0cm9rZS13aWR0aD0iMiIgLz48L3N2Zz4=')] bg-repeat-y opacity-30 h-10"></div>
+
+                        <FlowchartCard
+                            title="Multi-Stage Interview"
+                            step="02"
+                            delay={0.3}
+                            flow={
+                                <>
+                                    <Node label="Interview Invite Accepted" type="start" />
+                                    <Connector />
+                                    <Node label="AI Video Interview" helper="Technical Screening" />
+                                    <Connector />
+                                    <Node label="Score > 80%?" type="decision" />
+                                    <div className="grid grid-cols-2 gap-2 mt-2 w-full">
+                                        <div className="flex flex-col items-center">
+                                            <BranchLine type="yes" />
+                                            <Node label="HM Round" minimal />
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <BranchLine type="no" />
+                                            <Node label="Feedback Email" minimal type="end" />
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col items-center">
-                                        <BranchLabel type="no" />
-                                        <Connector small />
-                                        <Node label="Wait Next Quarter" bg="blue" />
+                                </>
+                            }
+                            benefit="Reduce time-to-hire from 42 days to 12 days"
+                        />
+
+                        {/* Mobile Connector */}
+                        <div className="lg:hidden flex justify-center py-4 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDAgTTEwIDQwIiBzdHJva2U9IiNlN2U1ZTQiIHN0cm9rZS13aWR0aD0iMiIgLz48L3N2Zz4=')] bg-repeat-y opacity-30 h-10"></div>
+
+                        <FlowchartCard
+                            title="Candidate Re-engagement"
+                            step="03"
+                            delay={0.5}
+                            flow={
+                                <>
+                                    <Node label="Candidate Rejected" type="start" helper="But scored 60-74%" />
+                                    <Connector />
+                                    <Node label="Add to Talent Pool" />
+                                    <Connector />
+                                    <Node label="New Open Role?" type="decision" />
+                                    <div className="grid grid-cols-2 gap-2 mt-2 w-full">
+                                        <div className="flex flex-col items-center">
+                                            <BranchLine type="yes" />
+                                            <Node label="AI Personal Email" minimal />
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <BranchLine type="no" />
+                                            <Node label="Wait Quarter" minimal type="end" />
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        }
-                        benefit="Build a qualified talent pipeline automatically"
-                    />
+                                </>
+                            }
+                            benefit="Build a qualified talent pipeline automatically"
+                        />
+                    </div>
                 </div>
             </div>
         </section>
     );
 };
 
-const FlowchartCard = ({ title, flow, benefit, delay }) => {
+const FlowchartCard = ({ title, flow, benefit, delay, step }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50, rotateX: 10 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay, ease: "easeOut" }}
-            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay, ease: "easeOut" }}
+            className="group relative bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-500 overflow-hidden"
         >
-            <h3 className="text-xl font-bold text-text-primary mb-8 text-center">{title}</h3>
+            {/* Top accent bar */}
+            <div className="h-1.5 w-full bg-gray-100 group-hover:bg-primary transition-colors duration-500"></div>
 
-            <div className="flex flex-col items-center min-h-[400px]">
-                {flow}
+            <div className="p-8">
+                <div className="flex items-center justify-between mb-8 text-text-primary">
+                    <h3 className="text-xl font-bold">{title}</h3>
+                    <div className="text-5xl font-bold text-gray-100 font-sans tracking-tighter opacity-50 group-hover:text-primary/10 transition-colors">{step}</div>
+                </div>
+
+                <div className="flex flex-col items-center min-h-[360px] relative">
+                    <div className="absolute inset-0 border border-gray-100 rounded-lg bg-gray-50/50 -z-10"></div>
+                    <div className="py-6 w-full flex flex-col items-center">
+                        {flow}
+                    </div>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: delay + 0.4 }}
+                    className="mt-8 pt-6 border-t border-gray-100 group-hover:border-primary/10 transition-colors"
+                >
+                    <div className="flex items-start gap-3">
+                        <div className="p-1 rounded-full bg-success/10 text-success mt-0.5">
+                            <Check size={14} strokeWidth={3} />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Impact</p>
+                            <p className="text-text-primary text-sm font-medium leading-relaxed">{benefit}</p>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
-
-            <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: delay + 0.8 }}
-                className="mt-8 bg-blue-50 border-l-4 border-primary p-4 rounded-r-lg"
-            >
-                <p className="text-sm font-bold text-primary mb-1">Benefit:</p>
-                <p className="text-text-primary text-sm leading-relaxed">{benefit}</p>
-            </motion.div>
         </motion.div>
     );
 };
 
-const Node = ({ label, bg, type = 'process', helper }) => {
+const Node = ({ label, type = 'process', helper, minimal }) => {
     const isDecision = type === 'decision';
+    const isStart = type === 'start';
+    const isEnd = type === 'end';
+
+    // Different styles for node types
+    let baseStyles = "relative z-10 flex flex-col items-center justify-center transition-all duration-300 ";
+    let boxStyles = "border text-xs font-semibold text-center shadow-sm backdrop-blur-sm ";
+
+    if (minimal) {
+        boxStyles += "px-2 py-1.5 rounded-md min-w-[100px] text-[10px] ";
+    } else {
+        boxStyles += "px-4 py-3 rounded-lg min-w-[140px] text-sm ";
+    }
+
+    if (isDecision) {
+        // Updated Decision Node: No rotation, rounded-xl, prominent border
+        boxStyles += "bg-white border-2 border-primary text-primary rounded-xl ";
+    } else if (isStart) {
+        boxStyles += "bg-text-primary border-text-primary text-white rounded-full ";
+    } else if (isEnd) {
+        boxStyles += "bg-gray-100 border-gray-200 text-text-muted rounded-md ";
+    } else {
+        boxStyles += "bg-white border-gray-200 text-text-primary group-hover:border-primary/50 ";
+    }
 
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="relative flex flex-col items-center z-10"
+            className={baseStyles}
+            whileHover={{ scale: 1.02 }}
         >
-            <div className={cn(
-                "px-4 py-3 rounded-xl border text-sm font-bold text-center min-w-[140px] shadow-sm transition-all",
-                isDecision ? "bg-blue-50 border-primary text-text-primary animate-pulse-scale" : "bg-primary border-primary text-white",
-                "max-w-[160px]"
-            )}>
-                {label}
+            <div className={boxStyles}>
+                <span className="block">{label}</span>
             </div>
-            {helper && (
-                <span className="mt-2 text-xs text-text-muted font-medium text-center max-w-[140px] leading-tight">
-                    {helper}
-                </span>
+            {helper && !minimal && (
+                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-24">
+                    <div className="text-[10px] text-text-muted leading-tight border-l-2 border-primary/20 pl-2">
+                        {helper}
+                    </div>
+                </div>
             )}
         </motion.div>
     );
 };
 
-const Connector = ({ small }) => {
+const Connector = () => (
+    <div className="h-6 w-px bg-gray-200 relative my-1 overflow-hidden group-hover:bg-primary/20 transition-colors duration-500">
+        <div className="absolute top-0 left-0 w-full h-full bg-primary/30 -translate-y-full group-hover:animate-[flow_1.5s_infinite]" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-300 rounded-full group-hover:bg-primary transition-colors duration-500"></div>
+    </div>
+);
+
+const BranchLine = ({ type }) => {
+    const isYes = type === 'yes';
     return (
-        <div className={cn("h-8 w-px bg-primary/20 relative my-1 overflow-hidden", small && "h-4")}>
-            <motion.div
-                initial={{ height: 0 }}
-                whileInView={{ height: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4 }}
-                className="absolute top-0 left-0 w-full bg-primary"
-            />
+        <div className="pb-2 flex flex-col items-center">
+            <div className="h-4 w-px bg-gray-200"></div>
+            <div className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${isYes ? 'text-success bg-success/5' : 'text-error bg-error/5'}`}>
+                {isYes ? 'Yes' : 'No'}
+            </div>
+            <div className="h-2 w-px bg-gray-200"></div>
         </div>
     );
 };
-
-const BranchLabel = ({ type }) => {
-    const isYes = type === 'yes';
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className={cn(
-                "text-[10px] font-black uppercase tracking-widest mb-1",
-                isYes ? "text-success" : "text-error"
-            )}
-        >
-            {isYes ? 'YES' : 'NO'}
-        </motion.div>
-    );
-};
-
-// Utils
-function cn(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
 
 export default FlowchartSection;

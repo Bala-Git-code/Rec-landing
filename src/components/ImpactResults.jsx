@@ -46,12 +46,13 @@ const StatCard = ({ stat, index }) => {
             whileInView={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+            whileHover={{ y: -4 }}
             className={cn(
                 "bg-white rounded-3xl p-8 border border-gray-100 shadow-sm group hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-500/20 transition-all duration-300 transform preserve-3d",
                 index >= 4 ? "lg:col-span-1" : "" // Just standard grid layout
             )}
         >
-            <div className="flex flex-col h-full transform transition-transform duration-300 group-hover:-translate-y-2">
+            <div className="flex flex-col h-full transition-transform duration-300">
                 <Counter value={stat.value} suffix={stat.suffix} />
                 <h3 className="text-xl font-bold text-text-primary mt-4 mb-2">{stat.label}</h3>
                 <p className="text-text-muted text-sm leading-relaxed">{stat.desc}</p>

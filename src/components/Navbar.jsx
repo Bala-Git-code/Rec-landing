@@ -27,8 +27,10 @@ const Navbar = () => {
     return (
         <nav
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[72px] flex items-center",
-                scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[72px] flex items-center border-b",
+                scrolled
+                    ? "bg-white/80 backdrop-blur-lg shadow-sm border-gray-100/50 supports-[backdrop-filter]:bg-white/60"
+                    : "bg-transparent border-transparent"
             )}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
@@ -43,9 +45,10 @@ const Navbar = () => {
                         <a
                             key={link.name}
                             href={link.href}
-                            className="text-text-primary text-sm font-medium hover:text-primary transition-colors"
+                            className="relative text-text-primary text-sm font-medium hover:text-primary transition-colors group py-2"
                         >
                             {link.name}
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full opacity-80" />
                         </a>
                     ))}
                     <Button variant="primary" className="px-6 py-2.5 text-sm rounded-lg shadow-md hover:shadow-lg">

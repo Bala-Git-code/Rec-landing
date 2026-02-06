@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const ProblemSolution = () => {
     const steps = [
@@ -28,26 +29,50 @@ const ProblemSolution = () => {
         <section className="py-24 bg-white" id="how-it-works">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+                    >
                         Hiring shouldn't feel like a burden.
-                    </h2>
-                    <p className="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="mt-4 max-w-2xl text-xl text-gray-600 mx-auto"
+                    >
                         We replaced the slow, manual parts of recruiting with intelligent automation.
-                    </p>
+                    </motion.p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative">
                     {/* Connector Line (Desktop) */}
                     <div className="hidden md:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                        <div className="w-12 h-12 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
+                        <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            whileInView={{ scale: 1, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4, type: "spring" }}
+                            className="w-12 h-12 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center"
+                        >
                             <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* Problem Card */}
-                    <div className="group relative p-8 bg-muted/30 rounded-2xl border border-transparent hover:border-gray-200 transition-all duration-300">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        whileHover={{ y: -4 }}
+                        className="group relative p-8 bg-muted/30 rounded-2xl border border-transparent hover:border-gray-200 transition-all duration-300 hover:shadow-lg"
+                    >
                         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                             <svg className="w-24 h-24 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
@@ -76,10 +101,17 @@ const ProblemSolution = () => {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Solution Card */}
-                    <div className="group relative p-8 bg-primary-bg rounded-2xl border border-primary/10 hover:border-primary/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        whileHover={{ y: -4 }}
+                        className="group relative p-8 bg-primary-bg rounded-2xl border border-primary/10 hover:border-primary/30 shadow-sm hover:shadow-xl transition-all duration-300"
+                    >
                         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                             <svg className="w-24 h-24 text-primary" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
@@ -114,7 +146,7 @@ const ProblemSolution = () => {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
